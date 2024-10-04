@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Солнечная система</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000033;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        #game-container {
+            text-align: center;
+            width: 80%;
+            max-width: 600px;
+        }
+        #solar-system {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .planet {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .planet:hover {
+            transform: scale(1.1);
+        }
+        #sun {
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle at 30% 30%, #ffd700, #ffa500);
+            box-shadow: 0 0 50px #ffd700;
+        }
+        #question-box {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <h1>Солнечная система</h1>
+        <div id="solar-system">
+            <div id="sun" class="planet"></div>
+        </div>
+        <div id="question-box">
+            <p id="question"></p>
+            <button id="answer-btn">Ответить</button>
+        </div>
+    </div>
+
+    <script>
+        const planets = [
+            { name: 'Меркурий', color: '#8c7e6d' },
+            { name: 'Венера', color: '#e39e1c' },
+            { name: 'Земля', color: '#6b93d6' },
+            { name: 'Марс', color: '#c1440e' },
+            { name: 'Юпитер', color: '#d8ca9d' }
+        ];
+
+        const questions = [
+            { q: "Какая планета самая большая в Солнечной системе?", a: "Юпитер" },
+            { q: "Какая планета известна как 'Красная планета'?", a: "Марс" },
+            { q: "На какой планете мы живем?", a: "Земля" },
+            { q: "Какая планета находится ближе всего к Солнцу?", a: "Меркурий" },
+            { q: "Какая планета известна своими кольцами?", a: "Сатурн" }
+        ];
+
+        const solarSystem = document.getElementById('solar-system');
+        const questionElement = document.getElementById('question');
+        const answerButton = document.getElementById('answer-btn');
+
+        let currentQuestion;
+
+        function createPlanets() {
+            planets.forEach(planet => {
+                const planetElement = document.createElement('div');
+                planetElement.className = 'planet';
+                planetElement.style.backgroundColor = planet.color;
+                planetElement.title = planet.name;
+                solarSystem.appendChild(planetElement);
+            });
+        }
+
+        function askQuestion() {
+            currentQuestion = questions[Math.floor(Math.random() * questions.length)];
+            questionElement.textContent = currentQuestion.q;
+        }
+
+        answerButton.addEventListener('click', () => {
+            const answer = prompt("Ваш ответ:");
+            if (answer && answer.toLowerCase() === currentQuestion.a.toLowerCase()) {
+                alert("Правильно!");
+            } else {
+                alert(`Неправильно. Правильный ответ: ${currentQuestion.a}`);
+            }
+            askQuestion();
+        });
+
+        createPlanets();
+        askQuestion();
+    </script>
+</body>
+</html>
